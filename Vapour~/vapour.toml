@@ -1,0 +1,48 @@
+# Copy this file to the ROOT of your Unity project (next to Assets/ and ProjectSettings/).
+[project]
+title = "Platformer Playground"
+slug = "tutorial-unity-platformer"
+engine = "unity"
+platform = "desktop"
+version = "0.1.0"
+
+[build]
+dir = "build/web"     # `vapour build` runs Unity in batch mode and writes the WebGL build here
+
+# Touch controls for phones. The sample reads Unity's legacy Input Manager:
+#   Horizontal / Vertical -> A D W S and the arrow keys, Jump -> Space, Fire3 -> Left Shift
+[controller]
+mode = "keyboard-map"
+
+[[controller.controls]]
+id = "move"
+type = "joystick"
+x = 0.20
+y = 0.74
+w = 0.30
+h = 0.30
+up = "w"
+down = "s"
+left = "a"
+right = "d"
+deadzone = 0.15
+sensitivity = 1.0
+repeat_hz = 60
+
+[[controller.controls]]
+id = "jump"
+type = "button"
+x = 0.86
+y = 0.70
+w = 0.16
+h = 0.16
+key = "Space"
+
+[[controller.controls]]
+id = "dash"
+type = "button"
+x = 0.68
+y = 0.80
+w = 0.13
+h = 0.13
+key = "Shift"

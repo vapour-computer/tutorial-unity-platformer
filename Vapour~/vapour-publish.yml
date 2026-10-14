@@ -1,0 +1,28 @@
+# Copy to .github/workflows/ in your Unity project. Publishes to Vapour when you push a tag like v0.1.0.
+# Needs these repository secrets: UNITY_LICENSE, UNITY_EMAIL, UNITY_PASSWORD (https://game.ci/docs/github/activation)
+# and VAPOUR_TOKEN, and a released vapour-computer/vapour-ci (the @v1 tag).
+# This is templates/unity-publish.yml from vapour-computer/vapour-ci.
+name: vapour-publish
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { lfs: true }
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          buildsPath: build
+      - name: Move build into place
+        run: mkdir -p build/web && cp -r build/WebGL/WebGL/. build/web/
+      - uses: vapour-computer/vapour-ci@v1
+        with:
+          token: ${{ secrets.VAPOUR_TOKEN }}
+          version: ${{ github.ref_name }}
