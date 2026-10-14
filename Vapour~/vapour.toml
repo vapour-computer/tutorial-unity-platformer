@@ -41,7 +41,7 @@ key = "Space"
 [[controller.controls]]
 id = "dash"
 type = "button"
-x = 0.68
+x = 0.62
 y = 0.80
 w = 0.13
 h = 0.13
