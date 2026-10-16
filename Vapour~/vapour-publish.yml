@@ -22,7 +22,11 @@ jobs:
           buildsPath: build
       - name: Move build into place
         run: mkdir -p build/web && cp -r build/WebGL/WebGL/. build/web/
+      - name: Resolve publish version
+        id: version
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
       - uses: vapour-computer/vapour-ci@v1
         with:
           token: ${{ secrets.VAPOUR_TOKEN }}
-          version: ${{ github.ref_name }}
+          version: ${{ steps.version.outputs.value }}
+          notes: "Release ${{ github.ref_name }}"
